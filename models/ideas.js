@@ -44,19 +44,11 @@ post {
     userID
     message: str
     {timestamps: true}
-}
-
-Schema 2
-comments {
-    commentId - ser 
-    postId - FK
-    userID - FK
     content
-    {timestamps: true}
+    likes: [user.id]
+    comments: [{comment: 'love it',
+              user: user.id}, {...},
+              {timestamps: true}]
     
 }
-Schema 3
-Likes
-    likeId ser
-    postId - FK
-    userID - FK
+
