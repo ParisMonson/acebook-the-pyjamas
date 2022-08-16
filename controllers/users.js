@@ -79,16 +79,26 @@ const UsersController = {
   },
 
   Create: async (req, res) => { 
-    if (validator.isAlpha(req.body.firstName) &&
-    validator.isAlpha(req.body.lastName) &&
-    validator.isAlphanumeric(req.body.username) &&
-    validator.isEmail(req.body.email) &&
-    validator.isStrongPassword(req.body.password) &&
-    validator.isMobilePhone(req.body.phoneNumber)) {
+    errors = [];
+    
+    if (!validator.isAlpha(req.body.firstName)) {
+      errors.push('Your first name should contain letters only and be 2 to 20 characters long.');
+    } else if (!validator.isAlpha(req.body.lastName)) {
+      errors.push('Your last name should contain letters only and be 2 to 20 characters long.');
+    } else if (!validator.isAlphanumeric(req.body.username)) {
+      errors.push('Your username should contain letters and digits only and be 5 to 20 characters long.');
+    } else if (!validator.isEmail(req.body.email)) {
+      errors.push('Please enter valid email.');
+    } else if (!validator.isStrongPassword(req.body.password)) {
+      errors.push('Your password should contain at least 1 uppercase letter, 1 symbol and 1 digit, and should longer than 8 characters.');
+    } else if (! validator.isMobilePhone(req.body.phoneNumber)) {
+      errors.push('Please enter valid mobile phone number.');
+    } 
+    if (!errors) {
       const user = new User(req.body);
       user.save((err) => {
         if (err) {
-          res.status(err.status).redirect("users/new");
+          res.status(500).redirect("users/new");
         }
         res.status(201).redirect("/posts");
     });
@@ -96,7 +106,9 @@ const UsersController = {
     // When user input does not pass validation
     else {
       console.log("You have been redirected to same page")
-      res.status(401).redirect("users/new");
+      res.render("users/new", {
+        errors: errors,
+      });
     }
   },
 
