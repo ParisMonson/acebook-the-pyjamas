@@ -11,7 +11,9 @@
     <li id="first-name">{{user.firstName}}</li>
     <li id="last-name">{{user.lastName}}</li>
   </ul>
-
+  <form action="/users/profile/update" method="get">
+      <input type="submit" value="update my profile" />
+  </form>
   <form action="/posts/new" method="get">
     <input type="submit" value="New post" />
   </form>

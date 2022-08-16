@@ -86,6 +86,16 @@ const UsersController = {
     });
   },
 
+  UpdateForm: (req, res) => {
+    res.render("users/updateProfile", {
+      session: req.session,
+    });
+  //   Users.update(
+  //    user.id,
+  //    firstName = 
+  //  )
+  },
+
   Search: (req, res) => {
     User.find(
       {
