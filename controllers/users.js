@@ -1,6 +1,8 @@
 const session = require("express-session");
 const User = require("../models/user");
 const Friend = require("../models/friend");
+const validator = require('validator');
+
 
 const UsersController = {
   Profile: async (req, res) => {
@@ -76,14 +78,26 @@ const UsersController = {
     res.render("users/new", {});
   },
 
-  Create: (req, res) => {
-    const user = new User(req.body);
-    user.save((err) => {
-      if (err) {
-        throw err;
-      }
-      res.status(201).redirect("/posts");
+  Create: async (req, res) => { 
+    if (validator.isAlpha(req.body.firstName) &&
+    validator.isAlpha(req.body.lastName) &&
+    validator.isAlphanumeric(req.body.username) &&
+    validator.isEmail(req.body.email) &&
+    validator.isStrongPassword(req.body.password) &&
+    validator.isMobilePhone(req.body.phoneNumber)) {
+      const user = new User(req.body);
+      user.save((err) => {
+        if (err) {
+          res.status(err.status).redirect("users/new");
+        }
+        res.status(201).redirect("/posts");
     });
+    }
+    // When user input does not pass validation
+    else {
+      console.log("You have been redirected to same page")
+      res.status(401).redirect("users/new");
+    }
   },
 
   Search: (req, res) => {
@@ -103,7 +117,7 @@ const UsersController = {
         res.render("users/search", { users: users });
       }
     );
-  },
+  }, 
 };
 
 module.exports = UsersController;

@@ -5,7 +5,7 @@
   <input id="lastName" type="text" name="lastName" value="" />
   <label for="username">Username</label>
   <input id="username" type="text" name="username" value="" />
-  <label for="phoneNumber">Phone Number</label>
+  <label for="phoneNumber">Mobile Phone Number</label>
   <input type="tel" id="phoneNumber" name="phoneNumber" required />
   <label for="email">Email: </label>
   <input id="email" type="email" name="email" value="" />
@@ -13,7 +13,14 @@
   <input id="password" type="password" name="password" value="" />
   <input id="submit" type="submit" value="Submit" />
 </form>
-
+<script>
+  fetch(location.href).then((response) => {
+    console.log(response.status);
+    if (response.status == 401) {
+      window.alert("Validation Error");
+    }
+  })
+</script>
 {{!-- UK phone number regex --}}
 {{!-- ^(?:0|\+?44)(?:\d\s?){9,10}$ --}}
 {{!-- >>>>>>> main --}}
