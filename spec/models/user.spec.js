@@ -86,10 +86,18 @@ describe("User model", () => {
     expect(user.phoneNumber).toEqual("12345678");
   });
 
-  it("can list all users", () => {
-    User.find((err, users) => {
-      expect(err).toBeNull();
-      expect(users).toEqual([]);
+  it("can list all users", async () => {
+    const user = new User({
+      firstName: "Someone",
+      lastName: "Surname",
+      username: "SomeoneSurname",
+      email: "someone@example.com",
+      password: "password",
+      phoneNumber: "12345678",
     });
+
+    await user.save();
+    const users = await User.find({});
+    expect(users[0]._id.valueOf()).toEqual(user._id.valueOf());
   });
 });
