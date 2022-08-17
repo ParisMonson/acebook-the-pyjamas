@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const flash = require('connect-flash');
 // sets the session
 const session = require("express-session");
 const methodOverride = require("method-override");
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 app.use(
   // the below is called request body, session view

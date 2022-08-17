@@ -1,6 +1,8 @@
 const session = require("express-session");
 const User = require("../models/user");
 const Friend = require("../models/friend");
+const { validationResult } = require('express-validator');
+
 
 const UsersController = {
   Profile: async (req, res) => {
@@ -76,14 +78,22 @@ const UsersController = {
     res.render("users/new", {});
   },
 
-  Create: (req, res) => {
-    const user = new User(req.body);
-    user.save((err) => {
-      if (err) {
-        throw err;
-      }
-      res.status(201).redirect("/posts");
-    });
+  Create: async (req, res) => {
+    
+      const errors = validationResult(req);
+      console.log(req.body);
+  
+      if (!errors.isEmpty()) {
+        res.render("users/new", { errors: errors.array() });
+        return;
+      } 
+      const user = new User(req.body);
+      user.save((err) => {
+        if (err) {
+          res.status(500).redirect("users/new");
+        }
+        res.status(201).redirect("/posts");
+      });
   },
 
   Search: (req, res) => {

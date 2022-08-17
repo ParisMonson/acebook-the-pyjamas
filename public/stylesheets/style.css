@@ -1,8 +1,8 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+/* The alert message box */
+.alert {
+  padding: 1px;
+  background-color: #F5F5F5;
+  color: black;
+  margin-bottom: 20px;
+  border:2px solid Tomato;
 }
