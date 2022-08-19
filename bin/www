@@ -14,7 +14,7 @@ var mongoose = require("mongoose");
  */
 
 process.env.NODE_OPTIONS = "--max_old_space_size=4096";
-
+console.log("ENV:" + process.env.NODE_OPTIONS);
 /**
  * Get port from environment and store in Express.
  */
@@ -25,13 +25,13 @@ app.set("port", port);
 /**
  * Connect to MongoDB
  **/
+ 
+let MONGODB_URI;
 
-const uri = process.env.MONGODB_URI;
 if (process.env.NODE_HOME == "/app/.heroku/node") {
-  var MONGODB_URI =
-    "mongodb+srv://admin:admin1$Acebook@acebook.si1ussd.mongodb.net/?retryWrites=true&w=majority";
+  MONGODB_URI = process.env.MONGODB_URI;
 } else {
-  var MONGODB_URI = process.env.MONGODB_URL || "mongodb://0.0.0.0/acebook";
+  MONGODB_URI = "mongodb://0.0.0.0/acebook";
 }
 
 mongoose.connect(MONGODB_URI, {
