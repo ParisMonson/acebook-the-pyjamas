@@ -8,7 +8,7 @@
   <li>{{this.user.firstName}}</li>
   <li>{{this.user.lastName}}</li>
   <form action="/users/profile/{{this.user.username}}" method="get">
-    <input class="btn btn-primary request-button" type="submit" value="profile: {{this.user.firstName}}" />
+    <input class="btn btn-primary" type="submit" value="profile: {{this.user.firstName}}" />
 
 </form>
   {{#if this.notFriends}}
